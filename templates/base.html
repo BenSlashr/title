@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Analyseur de Balises Title SEO{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #4a6bdf;
+            --secondary-color: #6c757d;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: white !important;
+        }
+        
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border: none;
+        }
+        
+        .card-header {
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a59c7;
+            border-color: #3a59c7;
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .score-high {
+            color: var(--success-color);
+        }
+        
+        .score-medium {
+            color: var(--warning-color);
+        }
+        
+        .score-low {
+            color: var(--danger-color);
+        }
+        
+        .title-too-long {
+            color: var(--danger-color);
+            font-weight: 500;
+        }
+        
+        .missing-keyword {
+            background-color: #ffeeee;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .keyword-tag {
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .suggested-title {
+            background-color: #f0f7ff;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding: 20px 0;
+            background-color: #f1f3f5;
+            color: #6c757d;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-search me-2"></i>Analyseur de Balises Title SEO
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mb-5">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="mt-5">
+        <div class="container text-center">
+            <p>© 2025 Analyseur de Balises Title SEO</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

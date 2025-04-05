@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Erreur - Analyseur de Balises Title SEO{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h2 class="card-title h4 mb-0">Une erreur est survenue</h2>
+            </div>
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 4rem;"></i>
+                </div>
+                
+                <div class="alert alert-danger">
+                    <p>{{ error }}</p>
+                </div>
+                
+                <div class="mt-4">
+                    <h4 class="h5">Solutions possibles :</h4>
+                    <ul>
+                        <li>Vérifiez que votre fichier CSV contient les colonnes requises : URL, Query, Impressions, Clicks, CTR, Position</li>
+                        <li>Assurez-vous que le fichier est correctement formaté et n'est pas corrompu</li>
+                        <li>Vérifiez que le fichier ne dépasse pas la taille maximale autorisée</li>
+                    </ul>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="/" class="btn btn-primary">
+                        <i class="bi bi-arrow-left me-2"></i>Retour à l'accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

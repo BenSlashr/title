@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Analyseur de Balises Title SEO - Accueil{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title h4 mb-0">Analyser vos balises title avec les données Google Search Console</h2>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <h3 class="h5">Comment ça marche :</h3>
+                    <ol>
+                        <li>Exportez vos données depuis Google Search Console (URLs, mots-clés, impressions, clics, CTR, position)</li>
+                        <li>Téléchargez le fichier CSV ci-dessous</li>
+                        <li>Recevez une analyse détaillée des balises title de vos pages</li>
+                    </ol>
+                </div>
+                
+                <form action="/upload" method="post" enctype="multipart/form-data" class="mb-3">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Fichier CSV de Google Search Console</label>
+                        <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+                        <div class="form-text">
+                            Le fichier doit contenir les colonnes : URL, Query, Impressions, Clicks, CTR, Position
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-upload me-2"></i>Analyser
+                    </button>
+                </form>
+                
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading"><i class="bi bi-info-circle me-2"></i>Conseils d'utilisation</h4>
+                    <p>Pour obtenir les meilleurs résultats :</p>
+                    <ul>
+                        <li>Exportez les données des 3 derniers mois pour une analyse pertinente</li>
+                        <li>Incluez au moins 100 requêtes par URL pour une analyse complète</li>
+                        <li>Vérifiez que votre fichier CSV contient toutes les colonnes requises</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h3 class="card-title h4 mb-0">Fonctionnalités</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-search text-primary" style="font-size: 2rem;"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Analyse des mots-clés</h4>
+                                <p>Identifie les mots-clés principaux pour lesquels chaque URL performe</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-code-square text-primary" style="font-size: 2rem;"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Extraction des balises title</h4>
+                                <p>Récupère automatiquement les balises title actuelles de vos pages</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-bar-chart text-primary" style="font-size: 2rem;"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Score d'optimisation</h4>
+                                <p>Évalue la qualité de vos balises title par rapport aux mots-clés</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex">
+                            <div class="me-3">
+                                <i class="bi bi-lightbulb text-primary" style="font-size: 2rem;"></i>
+                            </div>
+                            <div>
+                                <h4 class="h5">Suggestions d'amélioration</h4>
+                                <p>Propose des balises title optimisées pour chaque URL</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

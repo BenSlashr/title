@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Résultats de l'analyse des balises title{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h2 class="card-title h4 mb-0">Résumé de l'analyse</h2>
+                <div>
+                    <div class="dropdown d-inline-block me-2">
+                        <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-download me-1"></i>Exporter
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="exportDropdown">
+                            <li><a class="dropdown-item" href="/export?file_id={{ file_id }}&format=csv">Format CSV</a></li>
+                            <li><a class="dropdown-item" href="/export?file_id={{ file_id }}&format=excel">Format Excel</a></li>
+                        </ul>
+                    </div>
+                    <a href="/" class="btn btn-outline-primary btn-sm">
+                        <i class="bi bi-arrow-left me-1"></i>Nouvelle analyse
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-light">
+                            <div class="card-body text-center">
+                                <h3 class="h2 mb-0">{{ total_urls }}</h3>
+                                <p class="mb-0">URLs analysées</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-light">
+                            <div class="card-body text-center">
+                                <h3 class="h2 mb-0">{{ urls_needing_improvement }}</h3>
+                                <p class="mb-0">URLs à améliorer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100 bg-light">
+                            <div class="card-body">
+                                <h4 class="h5 mb-3">Actions recommandées :</h4>
+                                <ul class="mb-0">
+                                    <li>Commencez par optimiser les URLs avec un score inférieur à 50</li>
+                                    <li>Assurez-vous que les mots-clés principaux sont présents dans les balises title</li>
+                                    <li>Limitez la longueur des titles à 60 caractères maximum</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title h4 mb-0">Analyse détaillée par URL</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="accordion" id="urlAccordion">
+                    {% for result in results %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading{{ loop.index }}">
+                            <button class="accordion-button {% if loop.index > 1 %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}" aria-controls="collapse{{ loop.index }}">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <div class="me-3 text-truncate">
+                                        <span class="text-truncate">{{ result.url }}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="me-3">
+                                            {% if result.optimization_score >= 80 %}
+                                                <span class="badge bg-success">Score: {{ result.optimization_score }}</span>
+                                            {% elif result.optimization_score >= 50 %}
+                                                <span class="badge bg-warning text-dark">Score: {{ result.optimization_score }}</span>
+                                            {% else %}
+                                                <span class="badge bg-danger">Score: {{ result.optimization_score }}</span>
+                                            {% endif %}
+                                        </div>
+                                        {% if result.title_too_long %}
+                                            <span class="badge bg-danger me-2">Title trop long</span>
+                                        {% endif %}
+                                        {% if result.missing_keywords|length > 0 %}
+                                            <span class="badge bg-warning text-dark">Mots-clés manquants</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </button>
+                        </h2>
+                        <div id="collapse{{ loop.index }}" class="accordion-collapse collapse {% if loop.index == 1 %}show{% endif %}" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#urlAccordion">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <h4 class="h5">Balise title actuelle</h4>
+                                        <p class="{% if result.title_too_long %}title-too-long{% endif %}">
+                                            {{ result.current_title }}
+                                            <small class="text-muted ms-2">({{ result.title_length }} caractères)</small>
+                                            {% if result.title_too_long %}
+                                                <i class="bi bi-exclamation-triangle-fill text-danger ms-2" title="Title trop long"></i>
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <h4 class="h5">Mots-clés principaux</h4>
+                                        <div>
+                                            {% for keyword in result.top_keywords %}
+                                                <span class="keyword-tag">{{ keyword }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <h4 class="h5">Mots-clés manquants dans le title</h4>
+                                        <div>
+                                            {% if result.missing_keywords|length > 0 %}
+                                                {% for keyword in result.missing_keywords %}
+                                                    <span class="missing-keyword">{{ keyword }}</span>
+                                                {% endfor %}
+                                            {% else %}
+                                                <p class="text-success">
+                                                    <i class="bi bi-check-circle-fill me-1"></i>Tous les mots-clés principaux sont présents
+                                                </p>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-12 mb-3">
+                                        <h4 class="h5">Score d'optimisation</h4>
+                                        <div class="progress mb-2">
+                                            {% if result.optimization_score >= 80 %}
+                                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ result.optimization_score }}%" aria-valuenow="{{ result.optimization_score }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            {% elif result.optimization_score >= 50 %}
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: {{ result.optimization_score }}%" aria-valuenow="{{ result.optimization_score }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            {% else %}
+                                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{ result.optimization_score }}%" aria-valuenow="{{ result.optimization_score }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <small class="text-danger">Faible</small>
+                                            <small class="text-warning">Moyen</small>
+                                            <small class="text-success">Bon</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-12">
+                                        <h4 class="h5">Suggestion de title optimisé</h4>
+                                        <div class="suggested-title">
+                                            {{ result.suggested_title }}
+                                            <small class="text-muted ms-2">({{ result.suggested_title|length }} caractères)</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Enable tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
+{% endblock %}
