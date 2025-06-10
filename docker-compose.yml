@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  seo-analyzer:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Configuration pour sous-répertoire
+      # Pour exemple.com/nom-outil/, définir ROOT_PATH="/nom-outil"
+      - ROOT_PATH=${ROOT_PATH:-}
+      - PORT=${PORT:-8000}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    volumes:
+      # Persister les uploads
+      - ./uploads:/app/uploads
+    restart: unless-stopped
+    
+  # Configuration avec Nginx comme reverse proxy (optionnel)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - seo-analyzer
+    restart: unless-stopped
+    profiles:
+      - with-nginx 

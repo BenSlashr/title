@@ -1,138 +1,140 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Analyseur de Balises Title SEO{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <title>{% block title %}Title - Analyseur de Balises SEO{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'slashr-blue': '#4a90e2',
+                        'slashr-green': '#7bc943',
+                        'slashr-dark': '#1a1a1a',
+                        'slashr-gray': '#2a2a2a',
+                        'slashr-light-gray': '#f8f9fa'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #4a6bdf;
-            --secondary-color: #6c757d;
-            --success-color: #28a745;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
-            --info-color: #17a2b8;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-        }
-        
-        .navbar {
-            background-color: var(--primary-color);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        .navbar-brand {
-            font-weight: bold;
-            color: white !important;
-        }
-        
-        .card {
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-            border: none;
-        }
-        
-        .card-header {
-            background-color: #fff;
-            border-bottom: 1px solid #eee;
-            font-weight: 600;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
-        }
-        
-        .btn-primary:hover {
-            background-color: #3a59c7;
-            border-color: #3a59c7;
-        }
-        
-        .progress {
-            height: 10px;
-            border-radius: 5px;
+        .gradient-bg {
+            background: linear-gradient(135deg, #4a90e2 0%, #7bc943 100%);
         }
         
         .score-high {
-            color: var(--success-color);
+            color: #10b981;
         }
         
         .score-medium {
-            color: var(--warning-color);
+            color: #f59e0b;
         }
         
         .score-low {
-            color: var(--danger-color);
+            color: #ef4444;
         }
         
-        .title-too-long {
-            color: var(--danger-color);
+        .title-too-wide {
+            color: #ef4444;
             font-weight: 500;
         }
         
-        .missing-keyword {
-            background-color: #ffeeee;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-right: 5px;
-            display: inline-block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
+        .keyword-badge-high {
+            background: linear-gradient(135deg, #10b981, #059669);
         }
         
-        .keyword-tag {
-            background-color: #e9ecef;
-            padding: 2px 6px;
-            border-radius: 4px;
-            margin-right: 5px;
-            display: inline-block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
+        .keyword-badge-medium {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
         }
         
-        .suggested-title {
-            background-color: #f0f7ff;
-            padding: 10px;
-            border-radius: 6px;
-            border-left: 4px solid var(--primary-color);
-        }
-        
-        footer {
-            margin-top: 50px;
-            padding: 20px 0;
-            background-color: #f1f3f5;
-            color: #6c757d;
+        .keyword-badge-low {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
         }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="bi bi-search me-2"></i>Analyseur de Balises Title SEO
-            </a>
+<body class="bg-slashr-dark text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-slashr-dark border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="{{ url_for(request, 'index') }}" class="flex items-center">
+                        <img src="https://agence-slashr.fr/wp-content/uploads/2023/10/slashr-logo-white.svg" alt="SLASHR" class="h-8 w-auto">
+                    </a>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="https://outils.agence-slashr.fr/" class="text-gray-300 hover:text-white transition-colors duration-200 font-medium">
+                        Nos outils
+                    </a>
+                    <a href="https://agence-slashr.fr/seo/" class="text-gray-300 hover:text-white transition-colors duration-200 font-medium">
+                        Agence SEO à Lille
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-gray-300 hover:text-white focus:outline-none" id="mobile-menu-button">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="https://outils.agence-slashr.fr/" class="text-gray-300 hover:text-white block px-3 py-2 transition-colors duration-200">
+                        Nos outils
+                    </a>
+                    <a href="https://agence-slashr.fr/seo/" class="text-gray-300 hover:text-white block px-3 py-2 transition-colors duration-200">
+                        Agence SEO à Lille
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <div class="container mb-5">
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
-    <footer class="mt-5">
-        <div class="container text-center">
-            <p>© 2025 Analyseur de Balises Title SEO</p>
+    <!-- Footer -->
+    <footer class="mt-auto bg-slashr-gray border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <img src="https://agence-slashr.fr/wp-content/uploads/2023/10/slashr-logo-white.svg" alt="SLASHR" class="h-6 w-auto mr-3">
+                    <span class="text-gray-400 text-sm">Outil développé par l'équipe de SLASHR</span>
+                </div>
+                <div class="text-gray-400 text-sm">
+                    © 2025 SLASHR - Agence SEO à Lille
+                </div>
+    </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

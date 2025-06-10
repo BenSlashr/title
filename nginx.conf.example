@@ -1,0 +1,31 @@
+events {
+    worker_connections 1024;
+}
+
+http {
+    upstream seo_analyzer {
+        server seo-analyzer:8000;
+    }
+
+    server {
+        listen 80;
+        server_name exemple.com;
+
+        # Pour servir l'application sur exemple.com/nom-outil/
+        location /nom-outil/ {
+            proxy_pass http://seo_analyzer/;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            
+            # Important pour FastAPI avec sous-répertoire
+            proxy_set_header X-Forwarded-Prefix /nom-outil;
+        }
+
+        # Pour servir les fichiers statiques
+        location /nom-outil/static/ {
+            proxy_pass http://seo_analyzer/static/;
+        }
+    }
+} 

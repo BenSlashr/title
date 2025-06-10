@@ -1,96 +1,591 @@
 {% extends "base.html" %}
 
-{% block title %}Analyseur de Balises Title SEO - Accueil{% endblock %}
+{% block title %}Title - Analyseur de Balises SEO{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title h4 mb-0">Analyser vos balises title avec les données Google Search Console</h2>
-            </div>
-            <div class="card-body">
-                <div class="mb-4">
-                    <h3 class="h5">Comment ça marche :</h3>
-                    <ol>
-                        <li>Exportez vos données depuis Google Search Console (URLs, mots-clés, impressions, clics, CTR, position)</li>
-                        <li>Téléchargez le fichier CSV ci-dessous</li>
-                        <li>Recevez une analyse détaillée des balises title de vos pages</li>
-                    </ol>
-                </div>
-                
-                <form action="/upload" method="post" enctype="multipart/form-data" class="mb-3">
-                    <div class="mb-3">
-                        <label for="file" class="form-label">Fichier CSV de Google Search Console</label>
-                        <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
-                        <div class="form-text">
-                            Le fichier doit contenir les colonnes : URL, Query, Impressions, Clicks, CTR, Position
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-upload me-2"></i>Analyser
-                    </button>
-                </form>
-                
-                <div class="alert alert-info" role="alert">
-                    <h4 class="alert-heading"><i class="bi bi-info-circle me-2"></i>Conseils d'utilisation</h4>
-                    <p>Pour obtenir les meilleurs résultats :</p>
-                    <ul>
-                        <li>Exportez les données des 3 derniers mois pour une analyse pertinente</li>
-                        <li>Incluez au moins 100 requêtes par URL pour une analyse complète</li>
-                        <li>Vérifiez que votre fichier CSV contient toutes les colonnes requises</li>
-                    </ul>
-                </div>
-            </div>
+<div class="max-w-4xl mx-auto">
+    <!-- Hero Section -->
+    <div class="text-center mb-12">
+        <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-slashr-blue to-slashr-green rounded-full text-white text-sm font-medium mb-6">
+            🔍 Outil SEO Exclusif SLASHR
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-slashr-blue to-slashr-green bg-clip-text text-transparent">
+            Analyseur de Balises Title SEO
+        </h1>
+        <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            Optimisez vos balises title avec les données Google Search Console et l'intelligence artificielle
+        </p>
+    </div>
+
+    <!-- Main Card -->
+    <div class="bg-slashr-gray rounded-2xl border border-gray-700 shadow-2xl overflow-hidden">
+        <div class="bg-gradient-to-r from-slashr-blue to-slashr-green p-6">
+            <h2 class="text-2xl font-bold text-white flex items-center">
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Analyser vos balises title
+            </h2>
+            <p class="text-blue-100 mt-2">Basé sur les données Google Search Console</p>
         </div>
         
-        <div class="card mt-4">
-            <div class="card-header">
-                <h3 class="card-title h4 mb-0">Fonctionnalités</h3>
+        <div class="p-8">
+            <!-- How it works -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-white mb-4 flex items-center">
+                    <svg class="w-6 h-6 mr-2 text-slashr-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Comment ça marche
+                </h3>
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-slashr-blue rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-white font-bold">1</span>
+                        </div>
+                        <p class="text-gray-300">Exportez vos données depuis Google Search Console</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-slashr-blue rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-white font-bold">2</span>
+                        </div>
+                        <p class="text-gray-300">Téléchargez le fichier CSV ci-dessous</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-slashr-green rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-white font-bold">3</span>
+                        </div>
+                        <p class="text-gray-300">Recevez une analyse détaillée et des suggestions</p>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <div class="d-flex">
-                            <div class="me-3">
-                                <i class="bi bi-search text-primary" style="font-size: 2rem;"></i>
+            
+            <!-- Upload Form -->
+            <form action="{{ url_for(request, 'upload') }}" method="post" enctype="multipart/form-data" class="space-y-6">
+                <!-- Analysis Mode Selection -->
+                <div>
+                    <label class="text-lg font-medium text-white mb-4 block">Mode d'analyse</label>
+                    <div class="space-y-3">
+                        <label class="flex items-start p-4 bg-gray-800 rounded-lg border border-gray-600 hover:border-slashr-blue transition-colors cursor-pointer">
+                            <input type="radio" name="analysis_mode" value="scraping" checked class="mt-1 mr-3 text-slashr-blue focus:ring-slashr-blue">
+                            <div>
+                                <div class="font-medium text-white">CSV GSC + Scraping automatique</div>
+                                <div class="text-sm text-gray-400 mt-1">Upload seulement le CSV Google Search Console</div>
+                                <div class="text-xs text-gray-500 mt-1">
+                                    <strong>Avantage :</strong> Simple, 1 seul fichier<br>
+                                    <strong>Inconvénient :</strong> Plus lent (scraping requis)
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <label class="flex items-start p-4 bg-gray-800 rounded-lg border border-gray-600 hover:border-slashr-green transition-colors cursor-pointer">
+                            <input type="radio" name="analysis_mode" value="dual_csv" class="mt-1 mr-3 text-slashr-green focus:ring-slashr-green">
+                            <div>
+                                <div class="font-medium text-white">CSV GSC + CSV URL-Title</div>
+                                <div class="text-sm text-gray-400 mt-1">Upload 2 fichiers séparés</div>
+                                <div class="text-xs text-gray-500 mt-1">
+                                    <strong>Avantage :</strong> Ultra-rapide, gros volumes<br>
+                                    <strong>Inconvénient :</strong> Nécessite 2 fichiers
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- File Upload Section -->
+                <div id="file-upload-section">
+                    <!-- GSC File (always required) -->
+                    <div class="mb-6">
+                        <label class="block text-lg font-medium text-white mb-3">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-slashr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Fichier CSV Google Search Console
+                            </span>
+                        </label>
+                        
+                        <!-- Hidden file input -->
+                        <input type="file" id="gsc_file" name="gsc_file" accept=".csv" required class="hidden">
+                        
+                        <!-- Custom drag & drop zone -->
+                        <div id="gsc_drop_zone" class="relative group cursor-pointer">
+                            <div class="border-2 border-dashed border-gray-600 rounded-xl p-8 text-center transition-all duration-300 hover:border-slashr-blue hover:bg-slashr-blue/5 group-hover:scale-[1.02]">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-slashr-blue/20 to-slashr-blue/10 rounded-full flex items-center justify-center mb-4 group-hover:from-slashr-blue/30 group-hover:to-slashr-blue/20 transition-all duration-300">
+                                        <svg class="w-8 h-8 text-slashr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-lg font-semibold text-white mb-2">Glissez votre fichier CSV ici</h4>
+                                    <p class="text-gray-400 mb-4">ou cliquez pour parcourir</p>
+                                    <div class="inline-flex items-center px-4 py-2 bg-slashr-blue/20 rounded-lg text-slashr-blue text-sm font-medium border border-slashr-blue/30">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21l3-3m-3 3l3 3m-3-3h11a4 4 0 000-8h-1"></path>
+                                        </svg>
+                                        Sélectionner un fichier
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- File selected indicator -->
+                            <div id="gsc_file_selected" class="hidden mt-3 p-3 bg-green-900/20 border border-green-600/30 rounded-lg">
+                                <div class="flex items-center text-green-300">
+                                    <svg class="w-5 h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span id="gsc_file_name" class="font-medium"></span>
+                                    <button type="button" id="gsc_remove_file" class="ml-auto text-red-400 hover:text-red-300">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-sm text-gray-400 mt-3 flex items-center">
+                            <svg class="w-4 h-4 mr-1 text-slashr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Colonnes requises : <span class="text-slashr-blue font-medium">URL, Query, Impressions, Clicks, CTR, Position</span>
+                        </div>
+                    </div>
+                    
+                    <!-- URL-Title File (only for dual CSV mode) -->
+                    <div id="url-title-section" class="mb-6 hidden">
+                        <label class="block text-lg font-medium text-white mb-3">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-2 text-slashr-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                                </svg>
+                                Fichier CSV URL-Title
+                            </span>
+                        </label>
+                        
+                        <!-- Hidden file input -->
+                        <input type="file" id="url_title_file" name="url_title_file" accept=".csv" class="hidden">
+                        
+                        <!-- Custom drag & drop zone -->
+                        <div id="title_drop_zone" class="relative group cursor-pointer">
+                            <div class="border-2 border-dashed border-gray-600 rounded-xl p-8 text-center transition-all duration-300 hover:border-slashr-green hover:bg-slashr-green/5 group-hover:scale-[1.02]">
+                                <div class="flex flex-col items-center">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-slashr-green/20 to-slashr-green/10 rounded-full flex items-center justify-center mb-4 group-hover:from-slashr-green/30 group-hover:to-slashr-green/20 transition-all duration-300">
+                                        <svg class="w-8 h-8 text-slashr-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                                        </svg>
+                                    </div>
+                                    <h4 class="text-lg font-semibold text-white mb-2">Glissez votre fichier URL-Title ici</h4>
+                                    <p class="text-gray-400 mb-4">ou cliquez pour parcourir</p>
+                                    <div class="inline-flex items-center px-4 py-2 bg-slashr-green/20 rounded-lg text-slashr-green text-sm font-medium border border-slashr-green/30">
+                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21l3-3m-3 3l3 3m-3-3h11a4 4 0 000-8h-1"></path>
+                                        </svg>
+                                        Sélectionner un fichier
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- File selected indicator -->
+                            <div id="title_file_selected" class="hidden mt-3 p-3 bg-green-900/20 border border-green-600/30 rounded-lg">
+                                <div class="flex items-center text-green-300">
+                                    <svg class="w-5 h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span id="title_file_name" class="font-medium"></span>
+                                    <button type="button" id="title_remove_file" class="ml-auto text-red-400 hover:text-red-300">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-sm text-gray-400 mt-3 flex items-center">
+                            <svg class="w-4 h-4 mr-1 text-slashr-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Colonnes requises : <span class="text-slashr-green font-medium">URL, Title</span> • Optionnel : <span class="text-blue-300 font-medium">H1</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-gradient-to-r from-slashr-blue to-slashr-green hover:from-blue-600 hover:to-green-600 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-200 transform hover:scale-[1.02] flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    Analyser mes balises title
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Tips Card -->
+    <div class="mt-8 bg-blue-900/20 border border-blue-700/30 rounded-xl p-6">
+        <h4 class="text-lg font-semibold text-blue-300 mb-4 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Guide d'utilisation
+        </h4>
+        
+        <!-- Mode 1: GSC + Scraping -->
+        <div class="mb-6">
+            <h5 class="text-blue-200 font-medium mb-2">Mode 1 : CSV GSC + Scraping automatique</h5>
+            <ul class="space-y-2 text-blue-200 text-sm">
+                <li class="flex items-start">
+                    <svg class="w-4 h-4 mr-2 mt-0.5 text-slashr-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    Exportez vos données GSC des 3 derniers mois (format CSV)
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-4 h-4 mr-2 mt-0.5 text-slashr-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    Incluez au moins 100 requêtes par URL pour une analyse complète
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-4 h-4 mr-2 mt-0.5 text-orange-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    Plus lent car nécessite le scraping des titles (30-100 URLs max recommandé)
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Mode 2: Dual CSV -->
+        <div>
+            <h5 class="text-green-200 font-medium mb-2">Mode 2 : CSV GSC + CSV URL-Title</h5>
+            <ul class="space-y-2 text-green-200 text-sm">
+                <li class="flex items-start">
+                    <svg class="w-4 h-4 mr-2 mt-0.5 text-slashr-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <strong>Fichier 1 :</strong> Export GSC standard (URL, Query, Impressions, Clicks, CTR, Position)
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-4 h-4 mr-2 mt-0.5 text-slashr-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <strong>Fichier 2 :</strong> CSV avec correspondance URL-Title (URL + Title requis, H1 optionnel)
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-4 h-4 mr-2 mt-0.5 text-slashr-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    <strong>Avantage :</strong> Ultra-rapide, supporte des milliers d'URLs
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-4 h-4 mr-2 mt-0.5 text-slashr-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                    Permet de tester des titles non encore publiés
+                </li>
+            </ul>
+        </div>
+    </div>
+        
+    <!-- Features Grid -->
+    <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-slashr-gray rounded-xl p-6 border border-gray-700 hover:border-slashr-blue transition-colors">
+            <div class="w-12 h-12 bg-gradient-to-br from-slashr-blue to-blue-600 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+            <h4 class="text-lg font-semibold text-white mb-2">Analyse des mots-clés</h4>
+            <p class="text-gray-400 text-sm">Identifie les mots-clés principaux avec métriques complètes (CTR, position, clics)</p>
+        </div>
+        
+        <div class="bg-slashr-gray rounded-xl p-6 border border-gray-700 hover:border-slashr-green transition-colors">
+            <div class="w-12 h-12 bg-gradient-to-br from-slashr-green to-green-600 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                </svg>
+            </div>
+            <h4 class="text-lg font-semibold text-white mb-2">Extraction automatique</h4>
+            <p class="text-gray-400 text-sm">Récupère automatiquement les balises title actuelles de vos pages</p>
+        </div>
+        
+        <div class="bg-slashr-gray rounded-xl p-6 border border-gray-700 hover:border-purple-500 transition-colors">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                </svg>
+            </div>
+            <h4 class="text-lg font-semibold text-white mb-2">Score d'optimisation</h4>
+            <p class="text-gray-400 text-sm">Algorithme avancé évaluant la qualité et le potentiel business</p>
+        </div>
+        
+        <div class="bg-slashr-gray rounded-xl p-6 border border-gray-700 hover:border-yellow-500 transition-colors">
+            <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                </svg>
+            </div>
+            <h4 class="text-lg font-semibold text-white mb-2">IA Générative</h4>
+            <p class="text-gray-400 text-sm">Suggestions intelligentes avec GPT-4o et analyse sémantique</p>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-16 bg-slashr-gray rounded-2xl border border-gray-700 shadow-2xl overflow-hidden">
+        <div class="bg-gradient-to-r from-slashr-blue to-slashr-green p-6">
+            <h2 class="text-2xl font-bold text-white flex items-center">
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Questions fréquentes sur l'analyse des balises title SEO
+            </h2>
+            <p class="text-blue-100 mt-2">Tout ce que vous devez savoir sur l'optimisation des balises titre</p>
+        </div>
+        
+        <div class="p-8">
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="border border-gray-600 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full p-6 text-left bg-gray-800 hover:bg-gray-750 transition-colors flex items-center justify-between group" data-target="faq-1">
+                        <span class="text-lg font-semibold text-white group-hover:text-slashr-blue transition-colors">
+                            Qu'est-ce qu'une balise title et pourquoi l'analyser ?
+                        </span>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200 group-hover:text-slashr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-1" class="faq-content hidden bg-gray-850 p-6 border-t border-gray-600">
+                        <p class="text-gray-300 leading-relaxed">
+                            La <strong class="text-white">balise title</strong> est l'élément HTML qui définit le titre de votre page web. Elle apparaît dans l'onglet du navigateur et constitue le titre cliquable dans les résultats de recherche Google. 
+                            <br><br>
+                            L'<strong class="text-slashr-green">analyse de balise title SEO</strong> permet d'optimiser ce titre pour :
+                        </p>
+                        <ul class="mt-4 space-y-2 text-gray-300">
+                            <li class="flex items-start">
+                                <svg class="w-4 h-4 mr-2 mt-1 text-slashr-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Améliorer votre positionnement dans Google
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-4 h-4 mr-2 mt-1 text-slashr-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Augmenter le taux de clic (CTR) depuis les SERP
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-4 h-4 mr-2 mt-1 text-slashr-green flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                                Inclure les mots-clés stratégiques de vos pages
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="border border-gray-600 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full p-6 text-left bg-gray-800 hover:bg-gray-750 transition-colors flex items-center justify-between group" data-target="faq-2">
+                        <span class="text-lg font-semibold text-white group-hover:text-slashr-blue transition-colors">
+                            Comment optimiser mes balises titre pour le SEO ?
+                        </span>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200 group-hover:text-slashr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-2" class="faq-content hidden bg-gray-850 p-6 border-t border-gray-600">
+                        <p class="text-gray-300 leading-relaxed mb-4">
+                            Pour optimiser vos <strong class="text-white">balises titre</strong>, suivez ces bonnes pratiques SEO :
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-slashr-blue font-semibold mb-3">Règles techniques :</h4>
+                                <ul class="space-y-2 text-gray-300 text-sm">
+                                    <li>• Longueur idéale : 50-60 caractères</li>
+                                    <li>• Maximum 600 pixels de largeur</li>
+                                    <li>• 1 balise title unique par page</li>
+                                    <li>• Éviter le keyword stuffing</li>
+                                </ul>
                             </div>
                             <div>
-                                <h4 class="h5">Analyse des mots-clés</h4>
-                                <p>Identifie les mots-clés principaux pour lesquels chaque URL performe</p>
+                                <h4 class="text-slashr-green font-semibold mb-3">Contenu optimal :</h4>
+                                <ul class="space-y-2 text-gray-300 text-sm">
+                                    <li>• Mot-clé principal en début</li>
+                                    <li>• Description claire de la page</li>
+                                    <li>• Appel à l'action si pertinent</li>
+                                    <li>• Marque en fin (optionnel)</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="d-flex">
-                            <div class="me-3">
-                                <i class="bi bi-code-square text-primary" style="font-size: 2rem;"></i>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="border border-gray-600 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full p-6 text-left bg-gray-800 hover:bg-gray-750 transition-colors flex items-center justify-between group" data-target="faq-3">
+                        <span class="text-lg font-semibold text-white group-hover:text-slashr-blue transition-colors">
+                            Quelle est la différence entre balise title et H1 ?
+                        </span>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200 group-hover:text-slashr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-3" class="faq-content hidden bg-gray-850 p-6 border-t border-gray-600">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-gray-600">
+                                        <th class="text-left py-3 text-white font-semibold">Élément</th>
+                                        <th class="text-left py-3 text-white font-semibold">Balise Title</th>
+                                        <th class="text-left py-3 text-white font-semibold">Balise H1</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-gray-300">
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 font-medium">Localisation</td>
+                                        <td class="py-3">Onglet navigateur + SERP</td>
+                                        <td class="py-3">Titre principal visible sur la page</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 font-medium">Impact SEO</td>
+                                        <td class="py-3 text-slashr-green">★★★ Très fort</td>
+                                        <td class="py-3 text-slashr-blue">★★ Modéré</td>
+                                    </tr>
+                                    <tr class="border-b border-gray-700">
+                                        <td class="py-3 font-medium">Longueur</td>
+                                        <td class="py-3">50-60 caractères max</td>
+                                        <td class="py-3">Pas de limite technique</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 font-medium">Objectif</td>
+                                        <td class="py-3">Inciter au clic dans Google</td>
+                                        <td class="py-3">Structurer le contenu</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="border border-gray-600 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full p-6 text-left bg-gray-800 hover:bg-gray-750 transition-colors flex items-center justify-between group" data-target="faq-4">
+                        <span class="text-lg font-semibold text-white group-hover:text-slashr-blue transition-colors">
+                            Pourquoi utiliser la Google Search Console pour analyser mes balises title ?
+                        </span>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200 group-hover:text-slashr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-4" class="faq-content hidden bg-gray-850 p-6 border-t border-gray-600">
+                        <p class="text-gray-300 leading-relaxed mb-4">
+                            La Google Search Console fournit des données essentielles pour l'<strong class="text-white">analyse de balise title SEO</strong> :
+                        </p>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-slashr-blue/10 rounded-lg p-4 border border-slashr-blue/30">
+                                <h4 class="text-slashr-blue font-semibold mb-3 flex items-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                    Données réelles
+                                </h4>
+                                <ul class="text-gray-300 text-sm space-y-1">
+                                    <li>• Impressions par mot-clé</li>
+                                    <li>• Taux de clic (CTR) actuel</li>
+                                    <li>• Position moyenne dans Google</li>
+                                    <li>• Performance de chaque page</li>
+                                </ul>
                             </div>
-                            <div>
-                                <h4 class="h5">Extraction des balises title</h4>
-                                <p>Récupère automatiquement les balises title actuelles de vos pages</p>
+                            <div class="bg-slashr-green/10 rounded-lg p-4 border border-slashr-green/30">
+                                <h4 class="text-slashr-green font-semibold mb-3 flex items-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                    Optimisation basée données
+                                </h4>
+                                <ul class="text-gray-300 text-sm space-y-1">
+                                    <li>• Mots-clés qui génèrent du trafic</li>
+                                    <li>• Opportunités manquées</li>
+                                    <li>• Priorités d'optimisation</li>
+                                    <li>• ROI mesurable</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="d-flex">
-                            <div class="me-3">
-                                <i class="bi bi-bar-chart text-primary" style="font-size: 2rem;"></i>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="border border-gray-600 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full p-6 text-left bg-gray-800 hover:bg-gray-750 transition-colors flex items-center justify-between group" data-target="faq-5">
+                        <span class="text-lg font-semibold text-white group-hover:text-slashr-blue transition-colors">
+                            Comment interpréter les résultats de l'analyse de mes balises titre ?
+                        </span>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200 group-hover:text-slashr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-5" class="faq-content hidden bg-gray-850 p-6 border-t border-gray-600">
+                        <p class="text-gray-300 leading-relaxed mb-4">
+                            Notre outil vous fournit un <strong class="text-white">score d'optimisation sur 100</strong> et des recommandations précises :
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-center p-3 bg-green-900/20 rounded-lg border border-green-600/30">
+                                <div class="w-8 h-8 bg-green-600 text-white rounded-lg flex items-center justify-center font-bold mr-3">80+</div>
+                                <div>
+                                    <div class="text-green-300 font-semibold">Excellent</div>
+                                    <div class="text-gray-400 text-sm">Balise title déjà bien optimisée, améliorations mineures possibles</div>
+                                </div>
                             </div>
-                            <div>
-                                <h4 class="h5">Score d'optimisation</h4>
-                                <p>Évalue la qualité de vos balises title par rapport aux mots-clés</p>
+                            <div class="flex items-center p-3 bg-yellow-900/20 rounded-lg border border-yellow-600/30">
+                                <div class="w-8 h-8 bg-yellow-600 text-white rounded-lg flex items-center justify-center font-bold mr-3">50-79</div>
+                                <div>
+                                    <div class="text-yellow-300 font-semibold">À améliorer</div>
+                                    <div class="text-gray-400 text-sm">Potentiel d'optimisation significatif, mots-clés manquants</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3 bg-red-900/20 rounded-lg border border-red-600/30">
+                                <div class="w-8 h-8 bg-red-600 text-white rounded-lg flex items-center justify-center font-bold mr-3">&lt;50</div>
+                                <div>
+                                    <div class="text-red-300 font-semibold">Urgent</div>
+                                    <div class="text-gray-400 text-sm">Réécriture complète recommandée pour maximiser le potentiel SEO</div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="d-flex">
-                            <div class="me-3">
-                                <i class="bi bi-lightbulb text-primary" style="font-size: 2rem;"></i>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="border border-gray-600 rounded-lg overflow-hidden">
+                    <button class="faq-trigger w-full p-6 text-left bg-gray-800 hover:bg-gray-750 transition-colors flex items-center justify-between group" data-target="faq-6">
+                        <span class="text-lg font-semibold text-white group-hover:text-slashr-blue transition-colors">
+                            Combien de temps faut-il pour voir les résultats d'une optimisation de balise title ?
+                        </span>
+                        <svg class="w-5 h-5 text-gray-400 transform transition-transform duration-200 group-hover:text-slashr-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div id="faq-6" class="faq-content hidden bg-gray-850 p-6 border-t border-gray-600">
+                        <div class="space-y-4">
+                            <p class="text-gray-300 leading-relaxed">
+                                Les délais d'impact d'une optimisation de <strong class="text-white">balise title</strong> varient selon plusieurs facteurs :
+                            </p>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="text-center p-4 bg-slashr-blue/10 rounded-lg border border-slashr-blue/30">
+                                    <div class="text-2xl font-bold text-slashr-blue mb-2">2-7 jours</div>
+                                    <div class="text-sm text-gray-300">Indexation par Google</div>
+                                </div>
+                                <div class="text-center p-4 bg-slashr-green/10 rounded-lg border border-slashr-green/30">
+                                    <div class="text-2xl font-bold text-slashr-green mb-2">2-4 semaines</div>
+                                    <div class="text-sm text-gray-300">Amélioration du CTR</div>
+                                </div>
+                                <div class="text-center p-4 bg-purple-500/10 rounded-lg border border-purple-500/30">
+                                    <div class="text-2xl font-bold text-purple-400 mb-2">1-3 mois</div>
+                                    <div class="text-sm text-gray-300">Impact sur le ranking</div>
+                                </div>
                             </div>
-                            <div>
-                                <h4 class="h5">Suggestions d'amélioration</h4>
-                                <p>Propose des balises title optimisées pour chaque URL</p>
+                            <div class="bg-yellow-900/20 p-4 rounded-lg border border-yellow-600/30">
+                                <p class="text-yellow-200 text-sm">
+                                    <strong>💡 Conseil SLASHR :</strong> Surveillez vos métriques GSC régulièrement et utilisez notre outil pour identifier rapidement les pages qui bénéficient le plus des optimisations.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -99,4 +594,179 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Elements
+        const scrapingRadio = document.querySelector('input[name="analysis_mode"][value="scraping"]');
+        const dualCsvRadio = document.querySelector('input[name="analysis_mode"][value="dual_csv"]');
+        const urlTitleSection = document.getElementById('url-title-section');
+        const urlTitleFile = document.getElementById('url_title_file');
+        
+        // GSC File elements
+        const gscFileInput = document.getElementById('gsc_file');
+        const gscDropZone = document.getElementById('gsc_drop_zone');
+        const gscFileSelected = document.getElementById('gsc_file_selected');
+        const gscFileName = document.getElementById('gsc_file_name');
+        const gscRemoveFile = document.getElementById('gsc_remove_file');
+        
+        // Title File elements
+        const titleFileInput = document.getElementById('url_title_file');
+        const titleDropZone = document.getElementById('title_drop_zone');
+        const titleFileSelected = document.getElementById('title_file_selected');
+        const titleFileName = document.getElementById('title_file_name');
+        const titleRemoveFile = document.getElementById('title_remove_file');
+        
+        // Update file upload sections based on analysis mode
+        function updateFileUploadSections() {
+            if (dualCsvRadio.checked) {
+                urlTitleSection.classList.remove('hidden');
+                urlTitleFile.setAttribute('required', 'required');
+            } else {
+                urlTitleSection.classList.add('hidden');
+                urlTitleFile.removeAttribute('required');
+                // Clear title file if switching away from dual mode
+                titleFileInput.value = '';
+                titleFileSelected.classList.add('hidden');
+            }
+        }
+        
+        // File drop zone functionality
+        function setupDropZone(dropZone, fileInput, fileSelected, fileName, removeButton) {
+            // Click to select file
+            dropZone.addEventListener('click', () => {
+                fileInput.click();
+            });
+            
+            // File input change
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    showFileSelected(file, fileSelected, fileName);
+                }
+            });
+            
+            // Remove file button
+            removeButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                fileInput.value = '';
+                fileSelected.classList.add('hidden');
+            });
+            
+            // Drag and drop events
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                dropZone.classList.add('border-slashr-blue', 'bg-slashr-blue/10');
+            });
+            
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                dropZone.classList.remove('border-slashr-blue', 'bg-slashr-blue/10');
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                dropZone.classList.remove('border-slashr-blue', 'bg-slashr-blue/10');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const file = files[0];
+                    
+                    // Check if it's a CSV file
+                    if (file.type === 'text/csv' || file.name.endsWith('.csv')) {
+                        // Create a new FileList and assign to input
+                        const dt = new DataTransfer();
+                        dt.items.add(file);
+                        fileInput.files = dt.files;
+                        
+                        showFileSelected(file, fileSelected, fileName);
+                    } else {
+                        alert('Veuillez sélectionner un fichier CSV.');
+                    }
+                }
+            });
+        }
+        
+        // Show file selected indicator
+        function showFileSelected(file, fileSelectedElement, fileNameElement) {
+            fileNameElement.textContent = file.name;
+            fileSelectedElement.classList.remove('hidden');
+            
+            // Add animation
+            fileSelectedElement.style.opacity = '0';
+            fileSelectedElement.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                fileSelectedElement.style.transition = 'all 0.3s ease';
+                fileSelectedElement.style.opacity = '1';
+                fileSelectedElement.style.transform = 'translateY(0)';
+            }, 10);
+        }
+        
+        // Setup both drop zones
+        setupDropZone(gscDropZone, gscFileInput, gscFileSelected, gscFileName, gscRemoveFile);
+        setupDropZone(titleDropZone, titleFileInput, titleFileSelected, titleFileName, titleRemoveFile);
+        
+        // Mode change listeners
+        scrapingRadio.addEventListener('change', updateFileUploadSections);
+        dualCsvRadio.addEventListener('change', updateFileUploadSections);
+        
+        // Set initial state
+        updateFileUploadSections();
+        
+        // Prevent default drag behaviors on document
+        document.addEventListener('dragover', function(e) {
+            e.preventDefault();
+        });
+        
+        document.addEventListener('drop', function(e) {
+            e.preventDefault();
+        });
+        
+        // FAQ Accordion functionality
+        const faqTriggers = document.querySelectorAll('.faq-trigger');
+        
+        faqTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const targetContent = document.getElementById(targetId);
+                const arrow = this.querySelector('svg');
+                
+                // Close all other FAQ items
+                faqTriggers.forEach(otherTrigger => {
+                    if (otherTrigger !== trigger) {
+                        const otherId = otherTrigger.getAttribute('data-target');
+                        const otherContent = document.getElementById(otherId);
+                        const otherArrow = otherTrigger.querySelector('svg');
+                        
+                        otherContent.classList.add('hidden');
+                        otherArrow.style.transform = 'rotate(0deg)';
+                        otherTrigger.classList.remove('bg-gray-750');
+                    }
+                });
+                
+                // Toggle current FAQ item
+                if (targetContent.classList.contains('hidden')) {
+                    targetContent.classList.remove('hidden');
+                    arrow.style.transform = 'rotate(180deg)';
+                    trigger.classList.add('bg-gray-750');
+                    
+                    // Smooth scroll to FAQ item
+                    setTimeout(() => {
+                        trigger.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'nearest' 
+                        });
+                    }, 100);
+                } else {
+                    targetContent.classList.add('hidden');
+                    arrow.style.transform = 'rotate(0deg)';
+                    trigger.classList.remove('bg-gray-750');
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

@@ -1,37 +1,81 @@
 {% extends "base.html" %}
 
-{% block title %}Erreur - Analyseur de Balises Title SEO{% endblock %}
+{% block title %}Erreur - Analyseur de Balises SEO{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header bg-danger text-white">
-                <h2 class="card-title h4 mb-0">Une erreur est survenue</h2>
+<div class="max-w-2xl mx-auto">
+    <div class="bg-slashr-gray rounded-2xl border border-red-700/30 shadow-2xl overflow-hidden">
+        <!-- Header -->
+        <div class="bg-gradient-to-r from-red-600 to-red-700 p-6">
+            <h1 class="text-2xl font-bold text-white flex items-center">
+                <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.96-.833-2.73 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+                Une erreur est survenue
+            </h1>
+            <p class="text-red-100 mt-2">Nous n'avons pas pu traiter votre fichier</p>
+                </div>
+                
+        <div class="p-8">
+            <!-- Error Icon -->
+            <div class="text-center mb-6">
+                <div class="w-20 h-20 bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-10 h-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.96-.833-2.73 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                    </svg>
+                </div>
             </div>
-            <div class="card-body">
-                <div class="text-center mb-4">
-                    <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 4rem;"></i>
+            
+            <!-- Error Message -->
+            <div class="bg-red-900/20 border border-red-700/30 rounded-lg p-4 mb-6">
+                <p class="text-red-300 font-medium">{{ error }}</p>
                 </div>
                 
-                <div class="alert alert-danger">
-                    <p>{{ error }}</p>
-                </div>
-                
-                <div class="mt-4">
-                    <h4 class="h5">Solutions possibles :</h4>
-                    <ul>
-                        <li>Vérifiez que votre fichier CSV contient les colonnes requises : URL, Query, Impressions, Clicks, CTR, Position</li>
-                        <li>Assurez-vous que le fichier est correctement formaté et n'est pas corrompu</li>
-                        <li>Vérifiez que le fichier ne dépasse pas la taille maximale autorisée</li>
+            <!-- Solutions -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-slashr-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                    Solutions possibles
+                </h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 mt-0.5 text-slashr-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        Vérifiez que votre fichier CSV contient les colonnes requises : 
+                        <strong class="text-white">URL, Query, Impressions, Clicks, CTR, Position</strong>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 mt-0.5 text-slashr-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        Assurez-vous que le fichier est correctement formaté et n'est pas corrompu
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 mt-0.5 text-slashr-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        Vérifiez que le fichier ne dépasse pas la taille maximale autorisée
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 mt-0.5 text-slashr-blue flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                        Pour le mode "CSV avec titles", ajoutez une colonne <strong class="text-white">Title</strong>
+                    </li>
                     </ul>
                 </div>
                 
-                <div class="text-center mt-4">
-                    <a href="/" class="btn btn-primary">
-                        <i class="bi bi-arrow-left me-2"></i>Retour à l'accueil
+            <!-- Action Button -->
+            <div class="text-center">
+                <a href="/" class="bg-gradient-to-r from-slashr-blue to-slashr-green hover:from-blue-600 hover:to-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] inline-flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Retour à l'accueil
                     </a>
-                </div>
             </div>
         </div>
     </div>
